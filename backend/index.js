@@ -1,36 +1,41 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 
+dotenv.config({ path: ['.env.local', '.env'] });
+
+const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
-const accountRoutes = require('./routes/account');
 const payeesRoutes = require('./routes/payees');
 const customersRoutes = require('./routes/customers');
-const transactionsRoutes = require('./routes/transactions');
-const receiptsRoutes = require('./routes/receipts');
-
-const { verifyJWT } = require('./controllers/middleware');
+const orgAccountRoutes = require('./routes/orgAccounts');
 
 const app = express();
 
-app.use(cors());
-app.use(express.json()); // JSON body parser
+// Middleware
+app.use(express.json({ limit: '50mb' }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, '/public')));
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:5000'],
+}));
 
-// Connect to MongoDB
-mongoose.connect('', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+// Connect to DB
+connectDB();
+
+// Test route
+app.get('/', (req, res) => {
+  res.send('MASAB API Server is running!');
 });
 
-// Public routes
-app.use('/auth', authRoutes);
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/payees', payeesRoutes);
+app.use('/api/customers', customersRoutes);
+app.use('/api/orgAccounts', orgAccountRoutes);
 
-// Protected routes
-app.use('/account', verifyJWT, accountRoutes);
-app.use('/payees', verifyJWT, payeesRoutes);
-app.use('/customers', verifyJWT, customersRoutes);
-app.use('/transactions', verifyJWT, transactionsRoutes);
-app.use('/receipts', verifyJWT, receiptsRoutes);
-
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
