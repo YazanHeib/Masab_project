@@ -8,9 +8,11 @@ dotenv.config({ path: ['.env.local', '.env'] });
 
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
 const payeesRoutes = require('./routes/payees');
 const customersRoutes = require('./routes/customers');
 const orgAccountRoutes = require('./routes/orgAccounts');
+const transactionRoutes = require('./routes/transactions');
 
 const app = express();
 
@@ -20,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:5000'],
+  origin: ['http://localhost:5170'],
 }));
 
 // Connect to DB
@@ -36,6 +38,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/payees', payeesRoutes);
 app.use('/api/customers', customersRoutes);
 app.use('/api/orgAccounts', orgAccountRoutes);
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
