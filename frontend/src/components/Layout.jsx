@@ -3,10 +3,10 @@ import { Sidebar } from './Sidebar';
 
 const Layout = () => {
     return (
-        <>
+        <main>
             <Sidebar />
             <Outlet />
-        </>
+        </main>
     );
 };
 

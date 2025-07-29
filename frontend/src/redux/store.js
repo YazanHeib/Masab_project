@@ -3,20 +3,27 @@ import { authAPI } from './api/authAPI';
 import { getMeAPI } from './api/getMeAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import userReducer from './api/userSlice';
-import pageReducer from './api/pageSlice';
+import { customerAPI } from './api/customerAPI';
+import { payeeAPI } from './api/payeeAPI';
+import { transferAPI } from './api/transferAPI';
 
 export const store = configureStore({
     reducer: {
         [authAPI.reducerPath]: authAPI.reducer,
         [getMeAPI.reducerPath]: getMeAPI.reducer,
+        [customerAPI.reducerPath]: customerAPI.reducer,
+        [payeeAPI.reducerPath]: payeeAPI.reducer,
+        [transferAPI.reducerPath]: transferAPI.reducer,
         userState: userReducer,
-        page: pageReducer,
     },
     devTools: process.env.NODE_ENV === 'development',
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat([
             authAPI.middleware,
             getMeAPI.middleware,
+            customerAPI.middleware,
+            payeeAPI.middleware,
+            transferAPI.middleware,
         ]),
 });
 

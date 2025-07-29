@@ -1,51 +1,87 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
+import { useDispatch } from 'react-redux';
 import { logout } from '../redux/api/userSlice';
-import { setPage } from '../redux/api/pageSlice';
 
 export const Sidebar = () => {
-    const user = useSelector((state) => state.userState.user);
-    const page = useSelector((state) => state.page.currentPage);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const currentPath = location.pathname;
 
-    const handleClick = (targetPage) => {
-        if (targetPage) {
-            dispatch(setPage(targetPage));
-        } else {
-            dispatch(logout());
-        }
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/login');
     };
 
     return (
-        <main>
-            <section id="side-menu">
-                <Logo />
-                <ul>
-                    <SideLink onClick={handleClick} active={page} page="home" icon="bx bx-home" text="Home" />
-                    <SideLink onClick={handleClick} active={page} page="create-account" icon="bx bx-user-pin" text="Create Account" />
-                    <SideLink onClick={handleClick} active={page} page="transfer" icon="bx bx-transfer" text="Fund Transfer" />
-                    <SideLink onClick={handleClick} active={page} page="deposit" icon="bx bx-money" text="Deposit" />
-                    <SideLink onClick={handleClick} active={page} page="withdraw" icon="bx bx-log-out-circle" text="Withdraw" />
-                    <SideLink onClick={handleClick} active={page} icon="bx bx-log-out" text="Logout" />
-                </ul>
-            </section>
-        </main>
+        <section id="side-menu">
+            <Logo />
+            <ul>
+                {/* Home */}
+                <li>
+                    <Link
+                        to="/home"
+                        className={currentPath === '/home' ? 'active' : ''}
+                    >
+                        <i className="bx bx-home-alt"></i> Home
+                    </Link>
+                </li>
 
-    );
-};
+                {/* Customers */}
+                <li>
+                    <Link
+                        to="/customers"
+                        className={currentPath.includes('/customers') ? 'active' : ''}
+                    >
+                        <i className="bx bx-user"></i> Customers
+                    </Link>
+                </li>
 
-const SideLink = ({ icon, text, page, active, onClick }) => {
-    const handleClick = (e) => {
-        e.preventDefault();
-        onClick(page);
-    };
+                {/* Payees */}
+                <li>
+                    <Link
+                        to="/payees"
+                        className={currentPath.includes('/payees') ? 'active' : ''}
+                    >
+                        <i className="bx bx-group"></i> Payees
+                    </Link>
+                </li>
 
-    return (
-        <li>
-            <a href="#" onClick={handleClick} className={active === page ? 'active' : ''}>
-                <i className={icon}></i> {text}
-            </a>
-        </li>
+                {/* Transfer */}
+                <li>
+                    <Link
+                        to="/transfer"
+                        className={currentPath.includes('/transfer') ? 'active' : ''}
+                    >
+                        <i className="bx bx-transfer-alt"></i> Transfer
+                    </Link>
+                </li>
+
+                {/* Transactions */}
+                <li>
+                    <Link
+                        to="/transactions"
+                        className={currentPath.includes('/transactions') ? 'active' : ''}
+                    >
+                        <i className="bx bx-list-ul"></i> Transactions
+                    </Link>
+                </li>
+
+                {/* Logout */}
+                <li>
+                    <a
+                        href="javascript:void(0);"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleLogout();
+                        }}
+                    >
+                        <i className="bx bx-log-out-circle"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </section>
     );
 };

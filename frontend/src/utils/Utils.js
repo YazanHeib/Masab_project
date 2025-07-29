@@ -45,3 +45,8 @@ export const formatDate = (dateString) => {
     return new Intl.DateTimeFormat('en-US', options).format(date);
 };
 
+export const formatNumber = (number) => 
+{
+    return number.toLocaleString(undefined, {maximumFractionDigits: 2});
+}
+

@@ -7,7 +7,6 @@ const router = express.Router();
 router.post('/', async (req, res) => {
     try {
         const {
-            type,
             category,
             payeeId,
             customerId,
@@ -16,7 +15,7 @@ router.post('/', async (req, res) => {
         } = req.body;
 
         // Validate required fields
-        if (!type || !category || typeof amount !== 'number') {
+        if (!category || typeof amount !== 'number') {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
@@ -43,7 +42,6 @@ router.post('/', async (req, res) => {
 
         // Create and save the transaction
         const transaction = new Transaction({
-            type,
             category,
             payeeId: payeeId || undefined,
             customerId: customerId || undefined,

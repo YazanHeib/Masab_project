@@ -11,7 +11,6 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const payeesRoutes = require('./routes/payees');
 const customersRoutes = require('./routes/customers');
-const orgAccountRoutes = require('./routes/orgAccounts');
 const transactionRoutes = require('./routes/transactions');
 
 const app = express();
@@ -37,7 +36,6 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/payees', payeesRoutes);
 app.use('/api/customers', customersRoutes);
-app.use('/api/orgAccounts', orgAccountRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/users', userRoutes);
 
