@@ -12,6 +12,7 @@ const userRoutes = require('./routes/users');
 const payeesRoutes = require('./routes/payees');
 const customersRoutes = require('./routes/customers');
 const transactionRoutes = require('./routes/transactions');
+const orgAccountRoutes = require('./routes/orgAccounts');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api/payees', payeesRoutes);
 app.use('/api/customers', customersRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/orgAccounts', orgAccountRoutes);
 
 const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

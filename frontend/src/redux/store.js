@@ -6,6 +6,7 @@ import userReducer from './api/userSlice';
 import { customerAPI } from './api/customerAPI';
 import { payeeAPI } from './api/payeeAPI';
 import { transferAPI } from './api/transferAPI';
+import { orgAccountAPI } from './api/orgAccountAPI';
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         [customerAPI.reducerPath]: customerAPI.reducer,
         [payeeAPI.reducerPath]: payeeAPI.reducer,
         [transferAPI.reducerPath]: transferAPI.reducer,
+        [orgAccountAPI.reducerPath]: orgAccountAPI.reducer,
         userState: userReducer,
     },
     devTools: process.env.NODE_ENV === 'development',
@@ -24,6 +26,7 @@ export const store = configureStore({
             customerAPI.middleware,
             payeeAPI.middleware,
             transferAPI.middleware,
+            orgAccountAPI.middleware,
         ]),
 });
 
