@@ -746,3 +746,174 @@ textarea {
 .toggle-option:hover {
   border-color: #4CAF50;
 }
+
+/* Status Badge */
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.badge-success {
+  background-color: #28a745;
+}
+
+.badge-warning {
+  background-color: #ffc107;
+  color: #333;
+}
+
+/* Action Button */
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #007bff;
+}
+
+.btn-icon:hover {
+  color: #0056b3;
+}
+
+.transaction-details .subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.transaction-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.transaction-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.transaction-card .card-header i {
+  font-size: 24px;
+  color: #007bff;
+}
+
+.transaction-card .card-body .info p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #444;
+}
+
+.transaction-card .card-body .info i {
+  color: #007bff;
+  margin-right: 8px;
+}
+
+.invoice-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  max-width: 800px;
+}
+
+.invoice-box {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.logo-section h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #2c3e50;
+}
+
+.invoice-id {
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.logo-icon {
+  font-size: 40px;
+  color: #3498db;
+  margin-right: 10px;
+}
+
+.invoice-status .badge {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.badge-success {
+  background: #27ae60;
+  color: #fff;
+}
+
+.badge-warning {
+  background: #f39c12;
+  color: #fff;
+}
+
+.invoice-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.invoice-details h3 {
+  margin-bottom: 6px;
+  color: #34495e;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.invoice-table th, .invoice-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.invoice-table th {
+  background: #f4f6f7;
+  font-weight: bold;
+}
+
+.invoice-footer {
+  text-align: right;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.invoice-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

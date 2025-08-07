@@ -13,6 +13,7 @@ import CreatePayee from './pages/CreatePayee';
 import UpdatePayee from './pages/UpdatePayee';
 import Transfer from './pages/Transfer';
 import Transactions from './pages/Transactions';
+import ViewTransaction from './pages/ViewTransaction';
 
 const App = () => {
   const getRedirectRoute = () => {
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="payees/update/:id" element={<UpdatePayee />} />
           <Route path="transfer" element={<Transfer />} />
           <Route path="transactions" element={<Transactions />} />
+          <Route path="transactions/:id" element={<ViewTransaction />} />
         </Route>
         <Route path="login" element={<Login />} />
       </Routes>

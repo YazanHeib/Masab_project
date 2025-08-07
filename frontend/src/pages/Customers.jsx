@@ -39,7 +39,7 @@ const Customers = () => {
         { name: "Branch", selector: (row) => row.branch, sortable: true },
         { name: "Account", selector: (row) => row.account, sortable: true },
         { name: "Email", selector: (row) => row.email, sortable: true },
-        { name: "Status", selector: (row) => (row.isActive ? "Active" : "Inactive"), sortable: true },
+        // { name: "Status", selector: (row) => (row.isActive ? "Active" : "Inactive"), sortable: true },
         {
             name: "Actions",
             cell: (row) => (

@@ -18,7 +18,7 @@ export const transferAPI = createApi({
         // Get single transaction
         getTransaction: builder.query({
             query: (id) => ({
-                url: `/transactions/${id}`,
+                url: `/transactions/getOne/${id}`,
                 method: "GET"
             })
         }),
@@ -26,11 +26,22 @@ export const transferAPI = createApi({
         // Create transaction (transfer)
         createTransaction: builder.mutation({
             query: (data) => ({
-                url: "/transactions",
+                url: "/transactions/create",
                 method: "POST",
                 body: data
             }),
             invalidatesTags: ["Transactions"]
+        }),
+        updateTransactionStatus: builder.mutation({
+            query: ({ id, status }) => ({
+                url: `/transactions/updateStatus/${id}`,
+                method: "PATCH",
+                body: { status }
+            }),
+            invalidatesTags: (result, error, { id }) => [
+                "Transactions",
+                { type: "Transactions", id }
+            ]
         })
     })
 });
@@ -38,5 +49,6 @@ export const transferAPI = createApi({
 export const {
     useGetTransactionsQuery,
     useGetTransactionQuery,
-    useCreateTransactionMutation
+    useCreateTransactionMutation,
+    useUpdateTransactionStatusMutation
 } = transferAPI;

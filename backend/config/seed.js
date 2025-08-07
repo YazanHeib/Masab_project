@@ -1,41 +1,62 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const OrgAccount = require('../models/OrgAccount'); // Import OrgAccount model
 require('dotenv').config();
 
-async function seedUser() {
+async function seed() {
     try {
         await mongoose.connect(process.env.MONGO_URL);
+        console.log('Connected to MongoDB');
 
-        const username = 'admin';
-        const email = 'admin@gmail.com';
-        const plainPassword = 'admin123';
+        /** ✅ Seed Admin User **/
+        const username = 'masab support';
+        const email = 'support@masab.com';
+        const plainPassword = 'support123';
 
-        // Check if user already exists
         const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            console.log('User already exists. Skipping seed.');
-            process.exit(0);
+        if (!existingUser) {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(plainPassword, salt);
+
+            const user = new User({
+                username,
+                email,
+                password: hashedPassword,
+            });
+
+            await user.save();
+            console.log('✅ Admin user seeded successfully!');
+        } else {
+            console.log('⚠️ Admin user already exists. Skipping...');
         }
 
-        // Hash password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(plainPassword, salt);
+        /** ✅ Seed Organization Account **/
+        const orgBankName = 'Bank of Finance';
+        const branchNumber = '001';
+        const accountNumber = '1234567890';
+        const initialBalance = 1000000; // Example: 1,000,000
 
-        const user = new User({
-            username,
-            email,
-            password: hashedPassword,
-        });
+        const existingOrgAccount = await OrgAccount.findOne({ accountNumber });
+        if (!existingOrgAccount) {
+            const orgAccount = new OrgAccount({
+                bankName: orgBankName,
+                branchNumber,
+                accountNumber,
+                balance: initialBalance
+            });
 
-        await user.save();
+            await orgAccount.save();
+            console.log('✅ Organization account seeded successfully!');
+        } else {
+            console.log('⚠️ Organization account already exists. Skipping...');
+        }
 
-        console.log('User seeded successfully!');
         process.exit(0);
     } catch (err) {
-        console.error('Error seeding user:', err);
+        console.error('❌ Error seeding data:', err);
         process.exit(1);
     }
 }
 
-seedUser();
+seed();
