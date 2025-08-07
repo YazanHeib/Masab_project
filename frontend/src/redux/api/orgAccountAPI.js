@@ -6,6 +6,8 @@ export const orgAccountAPI = createApi({
     baseQuery: defaultFetchBase,
     tagTypes: ["OrgAccount"],
     endpoints: (builder) => ({
+
+        /** ✅ Get Organization Account **/
         getOrgAccount: builder.query({
             query: () => ({
                 url: "/orgAccounts",
@@ -13,7 +15,17 @@ export const orgAccountAPI = createApi({
             }),
             providesTags: ["OrgAccount"],
         }),
+
+        /** ✅ Deposit Mutation **/
+        deposit: builder.mutation({
+            query: (body) => ({
+                url: "/orgAccounts/deposit",
+                method: "POST",
+                body,
+            }),
+            invalidatesTags: ["OrgAccount"], // refresh org account data after deposit
+        }),
     }),
 });
 
-export const { useGetOrgAccountQuery } = orgAccountAPI;
+export const { useGetOrgAccountQuery, useDepositMutation } = orgAccountAPI;

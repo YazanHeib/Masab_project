@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { setUser } from "./userSlice";
+import { logout, setUser } from "./userSlice";
 import defaultFetchBase from "./defaultFetchBase";
+import { removeToken, removeUserData } from "../../utils/Utils";
 
 export const getMeAPI = createApi({
     reducerPath: "getMeAPI",
@@ -24,5 +25,27 @@ export const getMeAPI = createApi({
                 }
             },
         }),
+        logoutUser: builder.mutation({
+            query() {
+                return {
+                    url: '/users/logout',
+                    credentials: 'include'
+                };
+            },
+            async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                    removeToken();
+                    removeUserData();
+                    dispatch(logout());
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }),
     }),
 });
+
+export const {
+    useLogoutUserMutation,
+} = getMeAPI;

@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 dotenv.config({ path: ['.env.local', '.env'] });
 
@@ -13,6 +15,10 @@ const payeesRoutes = require('./routes/payees');
 const customersRoutes = require('./routes/customers');
 const transactionRoutes = require('./routes/transactions');
 const orgAccountRoutes = require('./routes/orgAccounts');
+
+// Models
+const User = require('./models/User');
+const OrgAccount = require('./models/OrgAccount');
 
 const app = express();
 
@@ -26,7 +32,10 @@ app.use(cors({
 }));
 
 // Connect to DB
-connectDB();
+connectDB().then(() => {
+  // Run seeding after DB connection
+  runSeed();
+});
 
 // Test route
 app.get('/', (req, res) => {
@@ -42,4 +51,46 @@ app.use('/api/users', userRoutes);
 app.use('/api/orgAccounts', orgAccountRoutes);
 
 const PORT = process.env.PORT || 3005;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
+/** ✅ Seed Function **/
+async function runSeed() {
+  try {
+    console.log('🌱 Running seed...');
+    
+    // Admin User
+    const email = 'support@masab.com';
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) {
+      const hashedPassword = await bcrypt.hash('support123', 10);
+      await User.create({
+        username: 'masab support',
+        email,
+        password: hashedPassword,
+      });
+      console.log('✅ Admin user seeded successfully!');
+    } else {
+      console.log('⚠️ Admin user already exists.');
+    }
+
+    // Organization Account
+    const accountNumber = '1234567890';
+    const existingOrgAccount = await OrgAccount.findOne({ accountNumber });
+
+    if (!existingOrgAccount) {
+      await OrgAccount.create({
+        bankName: 'Bank of Finance',
+        branchNumber: '001',
+        accountNumber,
+        balance: 1000000,
+      });
+      console.log('✅ Organization account seeded successfully!');
+    } else {
+      console.log('⚠️ Organization account already exists.');
+    }
+
+  } catch (err) {
+    console.error('❌ Error during seeding:', err);
+  }
+}

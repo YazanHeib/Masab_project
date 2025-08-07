@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
-import { useDispatch } from 'react-redux';
-import { logout } from '../redux/api/userSlice';
+import { useLogoutUserMutation } from '../redux/api/getMeAPI';
 
 export const Sidebar = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const currentPath = location.pathname;
+    const [logoutUser, { isLoading, isSuccess, error, isError, data }] = useLogoutUserMutation();
 
-    const handleLogout = () => {
-        dispatch(logout());
-        navigate('/login');
+    useEffect(() => {
+        if (isSuccess) {
+            window.location.href = '/login';
+        }
+        if (isError) {
+            const errorMsg = error?.data?.message || "Failed to logout";
+            console.log(errorMsg)
+        }
+    }, [isLoading, isSuccess, isError, error, navigate]);
+
+    const onLogoutHandler = () => {
+        logoutUser();
     };
 
     return (
         <section id="side-menu">
-            <Logo />
+            <a href='/'>
+                <Logo />
+            </a>
+            
             <ul>
                 {/* Home */}
                 <li>
@@ -26,6 +37,16 @@ export const Sidebar = () => {
                         className={currentPath === '/home' ? 'active' : ''}
                     >
                         <i className="bx bx-home-alt"></i> Home
+                    </Link>
+                </li>
+
+                {/* Deposit */}
+                <li>
+                    <Link
+                        to="/deposit"
+                        className={currentPath.includes('/deposit') ? 'active' : ''}
+                    >
+                        <i className="bx bx-money"></i> Deposit
                     </Link>
                 </li>
 
@@ -75,7 +96,7 @@ export const Sidebar = () => {
                         href="javascript:void(0);"
                         onClick={(e) => {
                             e.preventDefault();
-                            handleLogout();
+                            onLogoutHandler();
                         }}
                     >
                         <i className="bx bx-log-out-circle"></i> Logout

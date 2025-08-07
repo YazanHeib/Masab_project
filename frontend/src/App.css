@@ -554,7 +554,7 @@ input:disabled {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #ccc;
+  color: #111;
   font-weight: 500;
   width: 33%;
   text-align: center;
@@ -575,7 +575,7 @@ input:disabled {
 }
 
 .step.active span {
-  background: #007bff;
+  background: var(--secondary-text-color);
 }
 
 .step p {
@@ -917,3 +917,4 @@ textarea {
   justify-content: flex-end;
   gap: 10px;
 }
+
