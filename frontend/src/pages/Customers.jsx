@@ -12,6 +12,10 @@ const Customers = () => {
     const [style, setStyle] = useState("");
 
     useEffect(() => {
+        refetch();
+    }, [refetch]);
+
+    useEffect(() => {
         if (isError) {
             setMessage(error?.data?.message || "Failed to fetch customers");
             setStyle("danger");

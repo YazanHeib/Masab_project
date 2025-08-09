@@ -11,6 +11,10 @@ const Payees = () => {
     const [message, setMessage] = useState("");
     const [style, setStyle] = useState("");
 
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
+
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this payee?")) {
             try {
