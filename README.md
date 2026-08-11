@@ -6,7 +6,7 @@ One Finance Manager logs in, sees the account balance, records payments, records
 ## 1. What this app does
 
 - **Login and Logout** for a single user
-- **Dashboard** with current balance, total transactions, and pending count
+- **Dashboard** with current balance, total transactions, and pending count.
 - **Manage Payees** (employees, suppliers, pension funds) with add, edit, delete
 - **Manage Customers** with add, edit, delete
 - **Create Transactions** in a three step wizard
